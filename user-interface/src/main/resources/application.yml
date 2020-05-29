@@ -1,0 +1,55 @@
+spring:
+  application.name: UserInterfaceApplication
+  devtools:
+    livereload:
+      port: 12345
+  datasource:
+    url: jdbc:mysql://mysqlrouter:3306/uidb
+    username: user1
+    password: password1
+  tomcat:
+    max-wait: 20000
+    max-active: 50
+    max-idle: 20
+    min-idle: 15
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        format_sql: true
+        id:
+          new_generator_mappings: false
+  cloud.stream:
+    kafka:
+      binder:
+        brokers: kafka1:9094,kafka2:9095,kafka3:9096
+        replication-factor: 3
+      streams.binder.configuration.application.server: user-interface:18080
+
+playmaster.store.url: "http://play-master:8082"
+gamemaster.store.url: "http://game-master:8081"
+
+server:
+  port: 8080
+debug: false
+
+security:
+  jwt:
+    token:
+      secret-key: secret-key
+      expire-length: 3000000 # 50 minutes duration by default: 50 minutes * 60 seconds * 1000 milliseconds
+
+UserController:
+  signin: Authenticates user and returns its JWT token.
+  signup: Creates user and returns its JWT token
+  delete: Deletes specific user by username
+  search: Returns specific user by username
+  me: Returns current user's data
+  score: Returns the score of the given user
+
+QueueController:
+  practice: Queue up for a practice play.
+  tournament: Queue up for a tournament.
+  tournament_create: Create a tournament and get its ID
