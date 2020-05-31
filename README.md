@@ -11,7 +11,6 @@ Test that everything is working by running a client side test.
 Working directory is considered the top level.
 
     mvn package -DskipTests=true 
-    cd client
     mvn test -pl client -am
         
 # Swarm 
